@@ -18,6 +18,10 @@ const tableauExt = window.tableau.extensions;
         });
     }
 
+
+
+    
+
     function getMarginFromObjClasses(objClasses){
         const margin = [0, 0, 0, 0];
         if (!objClasses) return margin;
@@ -51,10 +55,17 @@ const tableauExt = window.tableau.extensions;
     }
 
     async function render(obj) {
-        // Check if the object is effectively invisible
-        if (obj.size.width === 100 || obj.size.height === 100 || obj.position.x < -obj.size.width || obj.position.y < -obj.size.height) {
-            return; // Skip rendering for invisible objects
-        }
+    // ... existing code ...
+
+    // Improved visibility check using DOM element properties
+    const vizElement = document.querySelector(`#${objId}`);
+    if (vizElement && (vizElement.offsetWidth === 0 || vizElement.offsetHeight === 0)) {
+        return; // Skip rendering for invisible objects
+    }
+
+    // ... rest of the rendering logic ...
+}
+
 
         let objNameAndClasses = obj.name.split("|");
         //Parse the Name and Classes from the Object Name
