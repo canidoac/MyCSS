@@ -51,6 +51,11 @@ const tableauExt = window.tableau.extensions;
     }
 
     async function render(obj) {
+        // Check if the object is effectively invisible
+        if (obj.size.width === 0 || obj.size.height === 0 || obj.position.x < -obj.size.width || obj.position.y < -obj.size.height) {
+            return; // Skip rendering for invisible objects
+        }
+
         let objNameAndClasses = obj.name.split("|");
         //Parse the Name and Classes from the Object Name
         let objId = objNameAndClasses[0];
