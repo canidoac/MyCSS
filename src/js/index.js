@@ -17,11 +17,6 @@ let $ = window.$;
              console.error(error.message);
          });
      }
- 
- 
- 
-     
- 
      function getMarginFromObjClasses(objClasses){
          const margin = [0, 0, 0, 0];
          if (!objClasses) return margin;
