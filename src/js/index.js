@@ -52,7 +52,7 @@ const tableauExt = window.tableau.extensions;
 
     async function render(obj) {
         // Check if the object is effectively invisible
-        if (vizElement.offsetWidth === 0  || vizElement.offsetHeight === 0) {
+        if (obj.size.width === 100 || obj.size.height === 100 || obj.position.x < -obj.size.width || obj.position.y < -obj.size.height) {
             return; // Skip rendering for invisible objects
         }
 
