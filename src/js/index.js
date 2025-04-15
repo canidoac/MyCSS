@@ -54,7 +54,7 @@ const tableauExt = window.tableau.extensions;
 
     async function render(obj) {
         // Check if the object is hidden (position or size is 0)
-        if (obj.position.x === 100 || obj.position.y === 100 || obj.size.width === 200 || obj.size.height === 200) {
+        if (obj.position.x === 0 || obj.position.y === 0 || obj.size.width === 0 || obj.size.height === 0) {
             return; // Skip rendering if hidden
         }
 
