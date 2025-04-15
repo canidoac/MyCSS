@@ -4,19 +4,17 @@ const tableauExt = window.tableau.extensions;
 //Wrap everything into an anonymous function
 (function () {
     async function init() {
-        try{
-            //clean up any divs from the last initialization
-            $('body').empty();
-            await tableau.extensions.setClickThroughAsync(true);
-            
-            const dashboard = tableauExt.dashboardContent.dashboard;
-            for (const obj of dashboard.objects) {
-                await render(obj);
-            }
-        }
-        catch(error) {
+        //clean up any divs from the last initialization
+        $('body').empty();
+        tableau.extensions.setClickThroughAsync(true).then(() => {
+            let dashboard = tableauExt.dashboardContent.dashboard;
+            //Loop through the Objects on the Dashboard and render the HTML Objects
+            dashboard.objects.forEach(obj => {
+                render(obj);
+            })
+        }).catch((error) => {
             // Can throw an error if called from a dialog or on Tableau Desktop
-            console.error(error);
+            console.error(error.message);
         });
     }
 
@@ -53,11 +51,6 @@ const tableauExt = window.tableau.extensions;
     }
 
     async function render(obj) {
-        // Check if the object is hidden (position or size is 0)
-        if (obj.position.x === 0 || obj.position.y === 0 || obj.size.width === 0 || obj.size.height === 0) {
-            return; // Skip rendering if hidden
-        }
-
         let objNameAndClasses = obj.name.split("|");
         //Parse the Name and Classes from the Object Name
         let objId = objNameAndClasses[0];
