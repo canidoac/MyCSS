@@ -7,12 +7,14 @@ const tableauExt = window.tableau.extensions;
         //clean up any divs from the last initialization
         $('body').empty();
         tableau.extensions.setClickThroughAsync(true).then(() => {
-            let dashboard = tableauExt.dashboardContent.dashboard;
+            const dashboard = tableauExt.dashboardContent.dashboard;
+            // Wait for all worksheets to load their isVisible status
+            Promise.all(dashboard.objects.map(obj => obj.worksheet.getIsVisibleAsync())).then(() => {
             //Loop through the Objects on the Dashboard and render the HTML Objects
             dashboard.objects.forEach(obj => {
                 render(obj);
-            })
-        }).catch((error) => {
+            })})
+            }).catch((error) => {
             // Can throw an error if called from a dialog or on Tableau Desktop
             console.error(error.message);
         });
@@ -51,6 +53,9 @@ const tableauExt = window.tableau.extensions;
     }
 
     async function render(obj) {
+        if (!obj.worksheet.isVisible) {
+            return;
+        }
         let objNameAndClasses = obj.name.split("|");
         //Parse the Name and Classes from the Object Name
         let objId = objNameAndClasses[0];
