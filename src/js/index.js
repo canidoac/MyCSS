@@ -6,11 +6,108 @@ const tableauExt = window.tableau.extensions;
     async function init() {
         //clean up any divs from the last initialization
         $('body').empty();
-        tableau.extensions.setClickThroughAsync(true).then(() => {
-            let dashboard = tableauExt.dashboardContent.dashboard;
-            //Loop through the Objects on the Dashboard and render the HTML Objects
-            dashboard.objects.forEach(obj => {
-                render(obj);
+        await tableau.extensions.setClickThroughAsync(true);
+
+        let dashboard = tableauExt.dashboardContent.dashboard;
+        const worksheets = dashboard.worksheets;
+
+        // Loop through the Objects on the Dashboard and render the HTML Objects
+        for (const obj of dashboard.objects) {
+            // Check if the object is a worksheet and if it's visible
+            if (obj.objectType === "worksheet") {
+                const worksheet = worksheets.find(w => w.name === obj.name.split('|')[0]); // Get the name before the separator
+                if (worksheet && await isWorksheetVisible(worksheet)) {
+                    await render(obj);
+                }
+            } else {
+                await render(obj); // Render non-worksheet objects without checking visibility
+            }
+        }
+    }
+
+    async function isWorksheetVisible(worksheet) {
+        // Check if the worksheet has any active filters
+        const summaryData = await worksheet.getSummaryDataAsync();
+        return summaryData.totalRowCount > 0; // If it has rows, consider it visible
+    }
+
+    function getMarginFromObjClasses(objClasses) {
+        const margin = [0, 0, 0, 0];
+        if (!objClasses) return margin;
+
+        const classNames = objClasses.split(/\s+/);
+        classNames.reverse();
+        const marginClass = classNames.find((cl) => cl.startsWith('margin-'));
+        if (!marginClass) return margin;
+
+        const marginValues = marginClass.split('-').slice(1).map(v => parseInt(v));
+        if (marginValues.length === 1) {
+            const [all] = marginValues;
+            return [all, all, all, all];
+        }
+
+        if (marginValues.length === 2) {
+            const [vertical, horizontal] = marginValues;
+            return [vertical, horizontal, vertical, horizontal];
+        }
+
+        if (marginValues.length === 3) {
+            const [top, horizontal, bottom] = marginValues;
+            return [top, horizontal, bottom, horizontal];
+        }
+
+        if (marginValues.length === 4) {
+            return marginValues;
+        }
+
+        return margin;
+    }
+
+    async function render(obj) {
+        const objectNameAndClasses = obj.name.split("|");
+        // Parse the Name and Classes from the Object Name
+        const objectId = objectNameAndClasses[0];
+        let objectClasses;
+        // Check if there are classes on the object
+        if (objectNameAndClasses.length > 1) {
+            objectClasses = objectNameAndClasses[1];
+        }
+
+        // We need to check for padding classes first, as they must be handled via positioning
+        const margin = getMarginFromObjClasses(objectClasses);
+
+        // Here we set the CSS props to match the location of the objects on the Dashboard
+        let objectProperties = {
+            id: `${objectId}`,
+            css: {
+                'position': 'absolute',
+                'top': `${parseInt(obj.position.y) + margin[0]}px`,
+                'left': `${parseInt(obj.position.x) + margin[3]}px`,
+                'width': `${parseInt(obj.size.width) - margin[1] - margin[3]}px`,
+                'height': `${parseInt(obj.size.height) - margin[0] - margin[2]}px`
+            }
+        };
+
+        let $div = $('<div>', objectProperties);
+
+        // Add the class to the HTML Body
+        $div.addClass(objectClasses);
+        $('body').append($div);
+    }
+
+    $(document).ready(() => {
+        tableauExt.initializeAsync().then(() => {
+            init();
+            // Register an event handler for Dashboard Object resize
+            // Supports automatic sized dashboards and reloads
+            tableauExt.dashboardContent.dashboard.addEventListener(tableau.TableauEventType.DashboardLayoutChanged, init);
+        }, (err) => {
+            console.log("Broken");
+        });
+    });
+
+})();
+
             })
         }).catch((error) => {
             // Can throw an error if called from a dialog or on Tableau Desktop
