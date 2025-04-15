@@ -62,7 +62,7 @@ let $ = window.$;
  }
  
          // Check if the object is effectively invisible
-         if (obj.size.width === 100 || obj.size.height === 100 || obj.position.x < -obj.size.width || obj.position.y < -obj.size.height) {
+         if (obj.size.width >= 100 || obj.size.height >= 100) {
              return; // Skip rendering for invisible objects
          }
  
