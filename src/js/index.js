@@ -17,6 +17,11 @@ let $ = window.$;
              console.error(error.message);
          });
      }
+ 
+ 
+ 
+     
+ 
      function getMarginFromObjClasses(objClasses){
          const margin = [0, 0, 0, 0];
          if (!objClasses) return margin;
@@ -62,7 +67,7 @@ let $ = window.$;
  }
  
          // Check if the object is effectively invisible
-         if (obj.size.width >= 100 || obj.size.height >= 100) {
+         if (obj.size.width === 100 || obj.size.height === 100 || obj.position.x < -obj.size.width || obj.position.y < -obj.size.height) {
              return; // Skip rendering for invisible objects
          }
  
