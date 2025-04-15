@@ -4,20 +4,20 @@ const tableauExt = window.tableau.extensions;
 //Wrap everything into an anonymous function
 (function () {
     async function init() {
-        //clean up any divs from the last initialization
-        $('body').empty();        
-        await tableau.extensions.setClickThroughAsync(true).catch((error) => {
+        try{
+            //clean up any divs from the last initialization
+            $('body').empty();
+            await tableau.extensions.setClickThroughAsync(true);
             
-            console.error(error.message);
-        });
-        let dashboard = tableauExt.dashboardContent.dashboard;
-        
-        //Loop through the Objects on the Dashboard and render the HTML Objects
-        for(const obj of dashboard.objects){
-           await render(obj);
+            const dashboard = tableauExt.dashboardContent.dashboard;
+            for (const obj of dashboard.objects) {
+                await render(obj);
+            }
         }
-        
-
+        catch(error) {
+            // Can throw an error if called from a dialog or on Tableau Desktop
+            console.error(error);
+        });
     }
 
     function getMarginFromObjClasses(objClasses){
@@ -53,42 +53,39 @@ const tableauExt = window.tableau.extensions;
     }
 
     async function render(obj) {
-        let isVisible = true;
-        if(obj.worksheet){
-            isVisible = await obj.worksheet.getIsVisibleAsync();
+        // Check if the object is hidden (position or size is 0)
+        if (obj.position.x === 0 || obj.position.y === 0 || obj.size.width === 0 || obj.size.height === 0) {
+            return; // Skip rendering if hidden
         }
 
-        if(isVisible){
-
-            let objNameAndClasses = obj.name.split("|");
-            //Parse the Name and Classes from the Object Name
-            let objId = objNameAndClasses[0];
-            let objClasses;
-            //Check if there are classes on the object
-            if (objNameAndClasses.length > 1) {
-                objClasses = objNameAndClasses[1];
-            }
-            //Create the initial object with CSS Props
-            
-            // we need to check for padding classes first, as they must be handled via positioning
-            const margin = getMarginFromObjClasses(objClasses)
-            
-            //Here we set the CSS props to match the location of the objects on the Dashboard
-            let props = {
-                id: `${objId}`,
-                css: {
-                    'position': 'absolute',
-                    'top': `${parseInt(obj.position.y) + margin[0]}px`,
-                    'left': `${parseInt(obj.position.x) + margin[3]}px`,
-                    'width': `${parseInt(obj.size.width) - margin[1] - margin[3]}px`,
-                    'height': `${parseInt(obj.size.height) - margin[0] - margin[2]}px`
-                }
-            }
-            let $div = $('<div>', props);
-            //Add the class to the HTML Body
-            $div.addClass(objClasses);
-            $('body').append($div);
+        let objNameAndClasses = obj.name.split("|");
+        //Parse the Name and Classes from the Object Name
+        let objId = objNameAndClasses[0];
+        let objClasses;
+        //Check if there are classes on the object
+        if (objNameAndClasses.length > 1) {
+            objClasses = objNameAndClasses[1];
         }
+        //Create the initial object with CSS Props
+        
+        // we need to check for padding classes first, as they must be handled via positioning
+        const margin = getMarginFromObjClasses(objClasses)
+        
+        //Here we set the CSS props to match the location of the objects on the Dashboard
+        let props = {
+            id: `${objId}`,
+            css: {
+                'position': 'absolute',
+                'top': `${parseInt(obj.position.y) + margin[0]}px`,
+                'left': `${parseInt(obj.position.x) + margin[3]}px`,
+                'width': `${parseInt(obj.size.width) - margin[1] - margin[3]}px`,
+                'height': `${parseInt(obj.size.height) - margin[0] - margin[2]}px`
+            }
+        }
+        let $div = $('<div>', props);
+        //Add the class to the HTML Body
+        $div.addClass(objClasses);
+        $('body').append($div);
     }
 
     $(document).ready(() => {
