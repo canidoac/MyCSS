@@ -1,97 +1,95 @@
+let $ = window.$;
+const tableauExt = window.tableau.extensions;
+ 
+//Wrap everything into an anonymous function
 (function () {
-    $(document).ready(function () {
-        tableau.extensions.initializeAsync().then(function () {
-            const unregisterHandlerFunctions = [];
-            // Function to handle dashboard changes
-            function dashboardChanged() {
-                // Clear all added elements
-                $('.tab-styled').remove();
-                const dashboard = tableau.extensions.dashboardContent.dashboard;
-                // Get all worksheets
-                dashboard.worksheets.forEach(worksheet => {
-                    // Add an event listener to each worksheet to watch for size changes
-                    worksheet.addEventListener(tableau.TableauEventType.SizeChanged, function (sizeEvent) {
-                        // Get the object name with classes
-                        let objName = worksheet.name;
-                        // Split the object name to separate the name and the classes
-                        let nameAndClasses = objName.split('|');
-                        // Check if there are classes to add
-                        if (nameAndClasses.length > 1) {
-                            // Get the position and size of the object
-                            let size = worksheet.getBoundingRectAsync();
-                            // Handle when the size is resolved
-                            size.then(rect => {
-                                // Get the classes to add to the object
-                                let styleClasses = nameAndClasses[1];
-                                // Get the object name without the classes
-                                let objectName = nameAndClasses[0];
-                                // Check if the object is visible
-                                if (rect.width > 0 && rect.height > 0) {
-                                    // Create a new div element
-                                    let newDiv = document.createElement('div');
-                                    // Add the classes to the div element
-                                    newDiv.className = styleClasses;
-                                    // Set the position of the div element
-                                    newDiv.style.position = 'absolute';
-                                    newDiv.style.left = rect.left + 'px';
-                                    newDiv.style.top = rect.top + 'px';
-                                    newDiv.style.width = rect.width + 'px';
-                                    newDiv.style.height = rect.height + 'px';
-                                    newDiv.style.zIndex = 0;
-                                    // Add a class to identify the div as a styled div
-                                    newDiv.classList.add('tab-styled');
-                                    newDiv.id = objectName;
-                                    // Add the div to the body
-                                    document.body.appendChild(newDiv);
-                                }
-                            });
-                        }
-                    });
-                    // Get the object name with classes
-                    let objName = worksheet.name;
-                    // Split the object name to separate the name and the classes
-                    let nameAndClasses = objName.split('|');
-                    // Check if there are classes to add
-                    if (nameAndClasses.length > 1) {
-                        // Get the position and size of the object
-                        let size = worksheet.getBoundingRectAsync();
-                        // Handle when the size is resolved
-                        size.then(rect => {
-                            // Get the classes to add to the object
-                            let styleClasses = nameAndClasses[1];
-                            // Get the object name without the classes
-                            let objectName = nameAndClasses[0];
-                            // Check if the object is visible
-                            if (rect.width > 0 && rect.height > 0) {
-                                // Create a new div element
-                                let newDiv = document.createElement('div');
-                                // Add the classes to the div element
-                                newDiv.className = styleClasses;
-                                // Set the position of the div element
-                                newDiv.style.position = 'absolute';
-                                newDiv.style.left = rect.left + 'px';
-                                newDiv.style.top = rect.top + 'px';
-                                newDiv.style.width = rect.width + 'px';
-                                newDiv.style.height = rect.height + 'px';
-                                newDiv.style.zIndex = 0;
-                                // Add a class to identify the div as a styled div
-                                newDiv.classList.add('tab-styled');
-                                newDiv.id = objectName;
-                                // Add the div to the body
-                                document.body.appendChild(newDiv);
-                            }
-                        });
-                    }
-                });
+    async function init() {
+        //clean up any divs from the last initialization
+        $('body').empty();
+        tableau.extensions.setClickThroughAsync(true).then(() => {
+            let dashboard = tableauExt.dashboardContent.dashboard;
+            //Loop through the Objects on the Dashboard and render the HTML Objects
+            dashboard.objects.forEach(obj => {
+                render(obj);
+            })
+        }).catch((error) => {
+            // Can throw an error if called from a dialog or on Tableau Desktop
+            console.error(error.message);
+        });
+    }
+
+    function getMarginFromObjClasses(objClasses){
+        const margin = [0, 0, 0, 0];
+        if (!objClasses) return margin;
+
+        const classNames = objClasses.split(/\s+/)
+        classNames.reverse();
+        const marginClass = classNames.find((cl) => cl.startsWith('margin-'));
+        if (!marginClass) return margin;
+
+        const marginValues = marginClass.split('-').slice(1).map(v => parseInt(v))
+        if (marginValues.length === 1) {
+            const [all] = marginValues
+            return [all, all, all, all]
+        }
+
+        if (marginValues.length === 2) {
+            const [vertical, horizontal] = marginValues
+            return [vertical, horizontal, vertical, horizontal]
+        }
+
+        if (marginValues.length === 3) {
+            const [top, horizontal, bottom] = marginValues
+            return [top, horizontal, bottom, horizontal]
+        }
+
+        if (marginValues.length === 4) {
+            return marginValues
+        }
+
+        return margin;
+    }
+
+    function render(obj) {
+        let objNameAndClasses = obj.name.split("|");
+        //Parse the Name and Classes from the Object Name
+        let objId = objNameAndClasses[0];
+        let objClasses;
+        //Check if there are classes on the object
+        if (objNameAndClasses.length > 1) {
+            objClasses = objNameAndClasses[1];
+        }
+        //Create the initial object with CSS Props
+
+        // we need to check for padding classes first, as they must be handled via positioning
+        const margin = getMarginFromObjClasses(objClasses)
+
+        //Here we set the CSS props to match the location of the objects on the Dashboard
+        let props = {
+            id: `${objId}`,
+            css: { 
+                'position': 'absolute',
+                'top': `${parseInt(obj.position.y) + margin[0]}px`,
+                'left': `${parseInt(obj.position.x) + margin[3]}px`,
+                'width': `${parseInt(obj.size.width) - margin[1] - margin[3]}px`,
+                'height': `${parseInt(obj.size.height) - margin[0] - margin[2]}px`
             }
-            // Add an event listener for when the dashboard changes
-            dashboard.addEventListener(tableau.TableauEventType.FilterChanged, dashboardChanged);
-            dashboard.addEventListener(tableau.TableauEventType.ParameterChanged, dashboardChanged);
-            // Call the function to handle the dashboard
-            dashboardChanged();
-        }, function (err) {
-            // If there is an error, log it to the console
-            console.log(err);
+        }
+        let $div = $('<div>', props);
+        //Add the class to the HTML Body
+        $div.addClass(objClasses);
+        $('body').append($div);
+    }
+
+    $(document).ready(() => {
+        tableauExt.initializeAsync().then(() => {
+            init();
+            //Register an event handler for Dashboard Object resize
+            //Supports automatic sized dashboards and reloads
+            let resizeEventHandler = tableauExt.dashboardContent.dashboard.addEventListener(tableau.TableauEventType.DashboardLayoutChanged, init);
+        }, (err) => {
+            console.log("Broken")
         });
     });
+
 })();
