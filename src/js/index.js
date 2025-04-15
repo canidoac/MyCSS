@@ -1,6 +1,6 @@
 let $ = window.$;
 const tableauExt = window.tableau.extensions;
- 
+
 //Wrap everything into an anonymous function
 (function () {
     async function init() {
@@ -50,7 +50,7 @@ const tableauExt = window.tableau.extensions;
         return margin;
     }
 
-    function render(obj) {
+    async function render(obj) {
         let objNameAndClasses = obj.name.split("|");
         //Parse the Name and Classes from the Object Name
         let objId = objNameAndClasses[0];
@@ -60,14 +60,14 @@ const tableauExt = window.tableau.extensions;
             objClasses = objNameAndClasses[1];
         }
         //Create the initial object with CSS Props
-
+        
         // we need to check for padding classes first, as they must be handled via positioning
         const margin = getMarginFromObjClasses(objClasses)
-
+        
         //Here we set the CSS props to match the location of the objects on the Dashboard
         let props = {
             id: `${objId}`,
-            css: { 
+            css: {
                 'position': 'absolute',
                 'top': `${parseInt(obj.position.y) + margin[0]}px`,
                 'left': `${parseInt(obj.position.x) + margin[3]}px`,
