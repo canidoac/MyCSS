@@ -77,7 +77,6 @@ const tableauExt = window.tableau.extensions;
                 'left': `${parseInt(obj.position.x) + margin[3]}px`,
                 'width': `${parseInt(obj.size.width) - margin[1] - margin[3]}px`,
                 'height': `${parseInt(obj.size.height) - margin[0] - margin[2]}px`
-                'background-color': 'rgba(255, 255, 255, 0)'
             }
         };
         let $div = $('<div>', props);
