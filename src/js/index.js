@@ -1,5 +1,5 @@
 let $ = window.$;
-const tableauExt = window.tableau.extensions;
+const tableauExt = window.tableau.extensions; 
 
 // Wrap everything into an anonymous function
 (function () {
