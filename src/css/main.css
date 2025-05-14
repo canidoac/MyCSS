@@ -15,8 +15,13 @@ body {
 }
 
 .rounded-10-top  {
-  border-top-left-radius: 1rem;  /* Esquina superior izquierda */
-  border-top-right-radius: 1rem; /* Esquina superior derecha */
+  border-top-left-radius: 1rem !important;  /* Esquina superior izquierda */
+  border-top-right-radius: 1rem !important; /* Esquina superior derecha */
+}
+
+.rounded-20-top  {
+  border-top-left-radius: 2rem !important;  /* Esquina superior izquierda */
+  border-top-right-radius: 2rem !important; /* Esquina superior derecha */
 }
 
 .rounded-20 {
