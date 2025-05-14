@@ -1167,7 +1167,9 @@ body {
   box-shadow: 0 .3rem 1rem rgba(0, 0, 0, .10) !important;
 }
 
-border: 1px solid #dee2e6 !important;
+.bodyfree {
+  background: transparent !important;
+}
     
 
 
