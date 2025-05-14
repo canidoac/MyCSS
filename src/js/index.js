@@ -2,7 +2,7 @@ let $ = window.$;
 const tableauExt = window.tableau.extensions;
 
 // Wrap everything into an anonymous function
-(function () {
+(function () { 
     async function init() {
         // Clean up any divs from the last initialization
         $('body').empty();
