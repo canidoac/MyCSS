@@ -1155,9 +1155,21 @@ body {
 }
 
 .CardKpi {
-  background-color: rgb(162 28 175);
   border-top-right-radius: 1rem !important; 
   border-bottom-right-radius: 1rem !important;
   border: 1px solid #dee2e6 !important;
   box-shadow: 0 .3rem 1rem rgba(0, 0, 0, .10) !important;
 }
+
+.CardKpi-Alert {
+  border-top: 1px solid #dee2e6 !important;    /* Borde en la parte superior */
+  border-bottom: 1px solid #dee2e6 !important; /* Borde en la parte inferior */
+  box-shadow: 0 .3rem 1rem rgba(0, 0, 0, .10) !important;
+}
+    
+
+
+
+
+
+
