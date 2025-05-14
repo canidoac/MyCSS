@@ -1,5 +1,5 @@
 let $ = window.$;
-const tableauExt = window.tableau.extensions; 
+const tableauExt = window.tableau.extensions;
 
 // Wrap everything into an anonymous function
 (function () {
@@ -18,7 +18,7 @@ const tableauExt = window.tableau.extensions;
         });
     }
 
-    function getMarginFromObjClasses(objClasses){
+    function getMarginFromObjClasses(objClasses) {
         const margin = [0, 0, 0, 0];
         if (!objClasses) return margin;
 
@@ -52,8 +52,7 @@ const tableauExt = window.tableau.extensions;
 
     async function render(obj) {
         // Check if the object is effectively invisible
-        if (obj.size.width < 1 || obj.size.height < 1 || !obj.isVisible) {
-            //obj.position.x < -obj.size.width || obj.position.y < -obj.size.height || !obj.isVisible) {
+        if (obj.size.width === 0 || obj.size.height === 0 || obj.position.x < -obj.size.width || obj.position.y < -obj.size.height) {
             return; // Skip rendering for invisible objects
         }
 
@@ -76,12 +75,16 @@ const tableauExt = window.tableau.extensions;
                 'top': `${parseInt(obj.position.y) + margin[0]}px`,
                 'left': `${parseInt(obj.position.x) + margin[3]}px`,
                 'width': `${parseInt(obj.size.width) - margin[1] - margin[3]}px`,
-                'height': `${parseInt(obj.size.height) - margin[0] - margin[2]}px`
+                'height': `${parseInt(obj.size.height) - margin[0] - margin[2]}px`,
+                'background-color': 'rgba(255, 255, 255, 0)' // Asegúrate de que el fondo sea transparente
             }
         };
+        
         let $div = $('<div>', props);
         // Add the class to the HTML Body
-        $div.addClass(objClasses);
+        if (objClasses) {
+            $div.addClass(objClasses);
+        }
         $('body').append($div);
     }
 
@@ -90,7 +93,7 @@ const tableauExt = window.tableau.extensions;
             init();
             // Register an event handler for Dashboard Object resize
             // Supports automatic sized dashboards and reloads
-            let resizeEventHandler = tableauExt.dashboardContent.dashboard.addEventListener(tableau.TableauEventType.DashboardLayoutChanged, init);
+            tableauExt.dashboardContent.dashboard.addEventListener(tableau.TableauEventType.DashboardLayoutChanged, init);
         }, (err) => {
             console.log("Error initializing Tableau extension:", err);
         });
