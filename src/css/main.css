@@ -1158,7 +1158,7 @@ body {
   border-top-right-radius: 1rem !important; 
   border-bottom-right-radius: 1rem !important;
   /*border: 1px solid #dee2e6 !important;*/
-  background-color: rgb(255 255 255)!important;
+  background-color: #ffffff !important;
   box-shadow: 0 .3rem 1rem rgba(0, 0, 0, .10) !important;
 }
 
@@ -1166,14 +1166,15 @@ body {
   border-top-right-radius: 1rem !important; 
   border-top-left-radius: 1rem !important;
   border-bottom: 2px solid #dee2e6!important;
-  background-color: rgb(255 255 255)!important;
+  background-color: #ffffff !important;
   /*box-shadow: 0 .3rem 1rem rgba(0, 0, 0, .10) !important;*/
 }
 
 .CardKpiPrincipal {
   border-radius: 1rem !important;
   /*border: 1px solid #dee2e6 !important;*/
-  background-color: rgb(255 255 255)!important;
+  background-color: #ffffff !important;
+  border-bottom: 2px solid #dee2e6!important;
   box-shadow: 0 .3rem 1rem rgba(0, 0, 0, .10) !important;
 }
 
