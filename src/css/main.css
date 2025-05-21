@@ -1158,15 +1158,15 @@ body {
   border-top-right-radius: 1rem !important; 
   border-bottom-right-radius: 1rem !important;
   /*border: 1px solid #dee2e6 !important;*/
-  background-color: rgb(255 255 255);
+  background-color: rgb(255 255 255)!important;
   box-shadow: 0 .3rem 1rem rgba(0, 0, 0, .10) !important;
 }
 
 .CardKpi-interno {
   border-bottom-right-radius: 1rem !important; 
   border-bottom-left-radius: 1rem !important;
-  border-bottom: 2px solid #dee2e6
-  background-color: rgb(255 255 255);
+  border-bottom: 2px solid #dee2e6!important;
+  background-color: rgb(255 255 255)!important;
   /*box-shadow: 0 .3rem 1rem rgba(0, 0, 0, .10) !important;*/
 }
 
@@ -1175,7 +1175,7 @@ body {
 }
 
 .bg-FondoMeli {
-  background-color: #f7f7f7;
+  background-color: #f7f7f7!important;
 }
     
 
