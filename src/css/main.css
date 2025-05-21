@@ -1166,7 +1166,7 @@ body {
   border-bottom-right-radius: 1rem !important; 
   border-bottom-left-radius: 1rem !important;
   border-bottom: 2px solid #dee2e6!important;
-  background-color: rgb(255 255 255)!important;
+  background-color: rgb(0 0 255)!important;
   /*box-shadow: 0 .3rem 1rem rgba(0, 0, 0, .10) !important;*/
 }
 
