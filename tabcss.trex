@@ -4,7 +4,7 @@
     <default-locale>en_US</default-locale>
     <name resource-id="name"/>
     <description>Extension Description</description>
-    <author name="Rody Zakovich" email="zakovichr@starschema.net" organization="Starschema" website="https://www.starschema.com/"/>
+    <author name="Andres Canido" email="Andres.canido@mercadolibre.com" organization="Mercadolibre" website="N/A"/>
     <min-api-version>1.7</min-api-version>
     <source-location>
       <url>https://canidoac.github.io/MyCSS/main.html</url>
