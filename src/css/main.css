@@ -1186,9 +1186,13 @@ body {
   background-color: #f7f7f7!important;
 }
 
-.background-blur {
-    background: transparent !important;
-    backdrop-filter: blur(10px)#f7f7f7!important; /* Efecto de desenfoque */
+.bg-blur {
+    background-color: rgb(109 40 217);
+    backdrop-filter: blur(10px)!important; /* Efecto de desenfoque */
+ }   
+
+.bg-test {
+    background-color: rgb(109 40 217);
  }   
 
 
