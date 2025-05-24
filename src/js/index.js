@@ -18,7 +18,7 @@ const tableauExt = window.tableau.extensions;
         });
     }
 
-    function getMarginFromObjClasses(objClasses) {
+    function getMarginFromObjClasses(objClasses){
         const margin = [0, 0, 0, 0];
         if (!objClasses) return margin;
 
@@ -53,6 +53,7 @@ const tableauExt = window.tableau.extensions;
     async function render(obj) {
         // Check if the object is effectively invisible
         if (obj.size.width < 1 || obj.size.height < 1 || !obj.isVisible) {
+            //obj.position.x < -obj.size.width || obj.position.y < -obj.size.height || !obj.isVisible) {
             return; // Skip rendering for invisible objects
         }
 
@@ -71,12 +72,11 @@ const tableauExt = window.tableau.extensions;
         let props = {
             id: `${objId}`,
             css: {
-                'position': 'fixed', // Use fixed position
+                'position': 'absolute',
                 'top': `${parseInt(obj.position.y) + margin[0]}px`,
                 'left': `${parseInt(obj.position.x) + margin[3]}px`,
                 'width': `${parseInt(obj.size.width) - margin[1] - margin[3]}px`,
-                'height': `${parseInt(obj.size.height) - margin[0] - margin[2]}px`,
-                //'background-color': 'transparent', // Keep background transparent
+                'height': `${parseInt(obj.size.height) - margin[0] - margin[2]}px`
                 'pointer-events': 'none' // Allow clicks to pass through
             }
         };
@@ -90,6 +90,7 @@ const tableauExt = window.tableau.extensions;
         tableauExt.initializeAsync().then(() => {
             init();
             // Register an event handler for Dashboard Object resize
+            // Supports automatic sized dashboards and reloads
             let resizeEventHandler = tableauExt.dashboardContent.dashboard.addEventListener(tableau.TableauEventType.DashboardLayoutChanged, init);
         }, (err) => {
             console.log("Error initializing Tableau extension:", err);
