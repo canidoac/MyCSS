@@ -1187,11 +1187,7 @@ body {
 }
 
 .background-blur {
-    position: fixed#f7f7f7!important; /* Para que ocupe toda la pantalla */
-    top: 0#f7f7f7!important;
-    left: 0#f7f7f7!important;
-    right: 0#f7f7f7!important;
-    bottom: 0#f7f7f7!important;
+    background: transparent !important;
     backdrop-filter: blur(10px)#f7f7f7!important; /* Efecto de desenfoque */
  }   
 
