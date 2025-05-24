@@ -77,7 +77,6 @@ const tableauExt = window.tableau.extensions;
                 'left': `${parseInt(obj.position.x) + margin[3]}px`,
                 'width': `${parseInt(obj.size.width) - margin[1] - margin[3]}px`,
                 'height': `${parseInt(obj.size.height) - margin[0] - margin[2]}px`
-                'pointer-events': 'none' // Allow clicks to pass through
             }
         };
         let $div = $('<div>', props);
