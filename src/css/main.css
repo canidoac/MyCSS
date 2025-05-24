@@ -1188,7 +1188,7 @@ body {
 
 .bg-blur {
     background-color: rgba(255, 255, 255, 0.5); /* Fondo semi-transparente */
-    backdrop-filter: blur(10px); /* Aplica desenfoque al fondo */
+    backdrop-filter: blur(1000px); /* Aplica desenfoque al fondo */
  }   
 
 .bg-test {
