@@ -1162,6 +1162,14 @@ body {
   box-shadow: 0 .3rem 1rem rgba(0, 0, 0, .10) !important;
 }
 
+.CardKpi2 {
+  border-top-right-radius: 0.5rem !important; 
+  border-bottom-right-radius: 0.5rem !important;
+  /*border: 1px solid #dee2e6 !important;*/
+  background-color: #ffffff !important;
+  box-shadow: 0 .3rem 1rem rgba(0, 0, 0, .10) !important;
+}
+
 .CardKpi-interno {
   border-top-right-radius: 1rem !important; 
   border-top-left-radius: 1rem !important;
