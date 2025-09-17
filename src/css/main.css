@@ -1211,7 +1211,7 @@ body {
   /*border: 1px solid #dee2e6 !important;*/
   background-color: #ffffff !important;
   /*box-shadow: 0 .3rem 1rem rgba(0, 0, 0, .10) !important;*/
-  box-shadow: 0.1rem 1rem rgba(0, 0, 0, .10) !important;
+  box-shadow: 0.5rem 1rem rgba(0, 0, 0, .10) !important;
 }
 
 .CardKpi1 {
