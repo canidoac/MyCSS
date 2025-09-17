@@ -1179,12 +1179,10 @@ body {
 }
 
 .CardKpiRoundDown05 {
-  /*border-top-right-radius: 0.5rem !important; */
-  /*border-top-left-radius: 0.5rem !important;*/
   border-bottom-right-radius: 0.5rem !important;
   border-bottom-left-radius: 0.5rem !important;
   background-color: #ffffff !important;
-  box-shadow: 0.3rem 1rem rgba(0, 0, 0, .10) !important;
+  box-shadow: 0 .2rem 1.5rem rgba(0, 0, 0, .06) !important;
 }
 
 .CardKpi05 {
