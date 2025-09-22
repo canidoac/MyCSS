@@ -1175,7 +1175,7 @@ body {
   /*border: 1px solid #dee2e6 !important;*/
   background-color: #ffffff !important;
   /*border-bottom: 2px solid #dee2e6!important;*/
-  box-shadow: 0.3rem 1rem rgba(0, 0, 0, .10) !important;
+  box-shadow: 0 .3rem 1rem rgba(0, 0, 0, .06) !important;
 }
 
 .CardKpiRoundDown05 {
