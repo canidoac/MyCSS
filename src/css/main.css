@@ -1201,13 +1201,31 @@ body {
 }
 
 .BotonAplicar {
-  width: 50px;
-  height: 50px;
-  background-color: #DB4437;
-  border-radius: 50% 50% 50% 0;
-  position: relative;
-  transform: rotate(-45deg);
-  box-shadow: -1px 1px 2px rgba(0, 0, 0, 0.2);
+  /* Fondo y texto */
+  background-color: #AECDEA; /* Un tono de azul similar al de tu imagen */
+  color: white; /* Color del texto blanco */
+  font-family: sans-serif; /* Puedes elegir la fuente que prefieras */
+  font-size: 1.2em; /* Tamaño del texto */
+  font-weight: bold; /* Negrita */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Sombra ligera en el texto para que resalte */
+
+  /* Forma y espaciado */
+  padding: 12px 30px; /* Relleno interno para darle tamaño al botón */
+  border: none; /* Sin borde por defecto del botón */
+  border-radius: 25px; /* Bordes muy redondeados para el efecto de píldora/cápsula */
+
+  /* Sombra del botón */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra sutil debajo del botón */
+
+  /* Comportamiento al pasar el ratón (opcional) */
+  cursor: pointer; /* Cambia el cursor a una mano */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Transición suave para efectos hover */
+}
+
+.BotonAplicar2 {
+  background-color: #AECDEA; /* Un tono de azul similar al de tu imagen */
+  box-shadow: 0 6px 1px rgba(0, 0, 0, 0.3)
+  border-radius: 25px;;
 }
 
 .bg-blur {
