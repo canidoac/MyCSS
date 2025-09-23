@@ -1186,8 +1186,8 @@ body {
 }
 
 .CardKpi05 {
-  border-top-right-radius: 1rem !important;
-  border-bottom-right-radius: 1rem !important;
+  border-top-right-radius: 0.5rem  !important;
+  border-bottom-right-radius: 0.5rem  !important;
   background-color: #ffffff !important;
   box-shadow: 0 .2rem 1.5rem rgba(0, 0, 0, .06) !important;
 }
