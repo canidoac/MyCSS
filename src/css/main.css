@@ -8,7 +8,7 @@ body {
     box-shadow: 0 0 0 0 rgba(174, 205, 234, 0.7);
   }
   70% {
-    transform: scale(1.02);
+    transform: scale(1.15);
     box-shadow: 0 0 0 10px rgba(174, 205, 234, 0);
   }
   100% {
