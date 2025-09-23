@@ -1202,8 +1202,8 @@ body {
 
 .BotonAplicar {
   background-color: #AECDEA; /* Un tono de azul similar al de tu imagen */
-  border-style: solid !important;
-  border-radius: 0 .2rem !important;
+  border-radius: 1rem !important;
+  border: 1px solid #dee2e6 !important;
   box-shadow: 0 .2rem 1.5rem rgba(0, 0, 0, .06) !important;
 }
 
