@@ -1200,6 +1200,16 @@ body {
   background-color: #f7f7f7!important;
 }
 
+.BotonAplicar {
+  width: 50px;
+  height: 50px;
+  background-color: #DB4437;
+  border-radius: 50% 50% 50% 0;
+  position: relative;
+  transform: rotate(-45deg);
+  box-shadow: -1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
 .bg-blur {
     background-color: rgba(255, 255, 255, 0.5); /* Fondo semi-transparente */
     backdrop-filter: blur(1000px); /* Aplica desenfoque al fondo */
