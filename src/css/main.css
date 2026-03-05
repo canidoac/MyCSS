@@ -1247,6 +1247,11 @@ body {
     border-radius: 1rem !important;
     border: 2px solid rgb(0, 0, 255)!important;
  } 
+
+.bg-No_Select {
+    border: 1px solid #dee2e6 !important;
+ } 
+
 .bg-test {
     background-color: rgba(109, 40, 147, 0.5); /* Fondo semi-transparente */
  }   
