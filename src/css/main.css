@@ -1242,6 +1242,11 @@ body {
     backdrop-filter: blur(1000px); /* Aplica desenfoque al fondo */
  }   
 
+.bg-Select {
+    background-color: rgba(0, 0, 255, 0.7)!important;
+    border-radius: 1rem !important;
+    border: 2px solid rgb(0, 0, 255)!important;
+ } 
 .bg-test {
     background-color: rgba(109, 40, 147, 0.5); /* Fondo semi-transparente */
  }   
