@@ -1250,6 +1250,7 @@ body {
 
 .bg-No_Select {
     border: 1px solid #dee2e6 !important;
+    border-radius: 0.5rem !important;
  } 
 
 .bg-test {
